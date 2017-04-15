@@ -1,0 +1,16 @@
+version: "2"
+
+services:
+  db:
+    image: "mysql:5.6"
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./init/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d"
+      - "./conf/mysql/conf.d:/etc/mysql/conf.d"
+      - "./.data/mysql:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: dev

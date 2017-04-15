@@ -1,0 +1,88 @@
+buildscript {
+  ext {
+    springBootVersion = '1.5.2.RELEASE'
+  }
+  repositories {
+    jcenter()
+    mavenCentral()
+    maven { url "https://plugins.gradle.org/m2/" }
+  }
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    classpath("io.spring.gradle:dependency-management-plugin:1.0.1.RELEASE")
+  }
+}
+
+version = '0.0.1-SNAPSHOT'
+
+allprojects {
+  apply plugin: "groovy"
+  apply plugin: 'idea'
+  apply plugin: "io.spring.dependency-management"
+
+  repositories {
+    jcenter()
+    mavenCentral()
+  }
+
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+
+  sourceSets {
+    test {
+      groovy {
+        srcDir "src/test/java"
+      }
+    }
+  }
+
+  test {
+    // Doc: https://docs.gradle.org/current/dsl/org.gradle.api.tasks.testing.logging.TestLogging.html
+    testLogging {
+      // Settings for Gradle log level LIFECYCLE
+      displayGranularity 1
+      events "failed", "skipped"
+      exceptionFormat "full"
+
+      // Settings for Gradle log level INFO (enabled by --info)
+      info {
+        events "started", "passed", "failed", "skipped"
+        exceptionFormat "full"
+      }
+    }
+  }
+
+  dependencyManagement {
+    dependencies {
+      // Swagger
+      dependency("io.swagger:swagger-core:1.5.10")
+      dependency("io.springfox:springfox-swagger2:2.5.0")
+      dependency("io.springfox:springfox-swagger-ui:2.5.0")
+
+      // Spock Framework
+      dependency("org.spockframework:spock-core:1.1-groovy-2.4-rc-4")
+      dependency("org.spockframework:spock-spring:1.1-groovy-2.4-rc-4")
+    }
+  }
+}
+
+subprojects {
+  dependencies {
+    // Test compiles shared by all sub projects
+    testCompile("org.spockframework:spock-core")
+  }
+}
+
+// =======================
+//  IntelliJ IDE Settings
+// =======================
+idea {
+  targetVersion = "15"
+  module {
+    excludeDirs += file(".idea")
+    excludeDirs += file(".gradle")
+    excludeDirs += file("gradle")
+    excludeDirs += file("out")
+    excludeDirs += file("vm/.data")
+  }
+}

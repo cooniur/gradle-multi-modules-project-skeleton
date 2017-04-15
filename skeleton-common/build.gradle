@@ -1,0 +1,4 @@
+dependencies {
+// Tests: Groovy
+    testCompile("org.codehaus.groovy:groovy-all")
+}

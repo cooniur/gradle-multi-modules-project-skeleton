@@ -1,0 +1,58 @@
+spring.output.ansi.enabled: always
+
+# Default database: local
+spring.datasource:
+  url: "jdbc:mysql://localhost:3306/local_db?useUnicode=yes&characterEncoding=UTF-8&useCursorFetch=true"
+  username: "root"
+  password: "root"
+  # JDBC conneciton pool properties
+  jmx-enabled: true
+  max-active: 100
+  initial-size: 5
+  min-idle: 5
+  max-idle: 25
+  max-wait: 10000
+  validationQuery: "SELECT 1"
+  test-on-borrow: true
+  test-on-return: true
+  test-while-idle: true
+  num-tests-per-eviction-run: 3
+  min-evictable-idle-time-millis: 300000
+  time-between-eviction-runs-millis: 300000
+
+# Flyway settings
+flyway:
+  enabled: true
+  validate-on-migrate: true
+
+# JPA & Hibernate
+spring.jpa:
+  hibernate:
+    naming-strategy: "org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy"
+  # Hibernate batch insert settings
+  jdbc.batch_size: 50
+  order_inserts: true
+  order_updates: true
+
+# Jackson Settings
+spring.jackson:
+  serialization:
+    fail_on_empty_beans: false
+    write_dates_as_timestamps: false
+  serialization-inclusing: always
+
+# Management API
+management:
+  context-path: "/manage"
+  security.enabled: false
+endpoints.health.sensitive: false
+
+# Default logging levels to reduce noises
+logging.level:
+  "org.springframework": WARN
+  "org.hibernate": WARN
+  "org.flywaydb": INFO
+  "org.hibernate.engine.jdbc.batch.internal.AbstractBatchImpl": WARN
+  "org.hibernate.engine.jdbc.spi.SqlExceptionHelper": OFF
+  "org.hibernate.hql.internal.QueryTranslatorFactoryInitiator": WARN
+  "org.springframework.jdbc.support.SQLErrorCodesFactory": OFF

@@ -1,0 +1,6 @@
+# Ignores all under .data folder
+.data/**
+
+# Keeps .data folder
+!.data
+!.data/.gitkeep

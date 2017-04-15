@@ -1,0 +1,12 @@
+[mysqld]
+##
+# Set the default transaction isolation level.
+# Available levels:
+#   - READ-UNCOMMITTED
+#   - READ-COMMITTED
+#   - REPEATABLE-READ (default)
+#   - SERIALIZABLE
+# Choose wisely and carefully.
+# See https://dev.mysql.com/doc/refman/5.6/en/innodb-transaction-isolation-levels.html
+##
+transaction_isolation = REPEATABLE-READ
